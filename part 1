@@ -1,0 +1,16 @@
+select * from clanovi_kg;
+
+select ime,prezime from zaposleni_kg;
+
+select * from zaposleni_kg where plata>60000;
+
+select * from zaposleni_kg where plata>60000 and prezime like 'P%';
+
+select * from zaposleni_kg where ime like '____';
+
+select mejl from zaposleni_kg where plata between 50000 and 60000;
+
+select ime, prezime from zaposleni_kg where id_menadzera in (1,2,3);
+
+select ime, prezime, mejl from zaposleni_kg where id_menadzera is null;
+
