@@ -46,8 +46,7 @@ join clanovi_kg cl
 on p.broj_clanske_karte=cl.broj_clanske_karte
 where datum_vracanja is null;
 
-//15- NEURADJEN
-select ime, prezime, datum_uzimanja, inventarski_broj, k.naziv
+select cl.ime, cl.prezime, p.datum_uzimanja, p.inventarski_broj, k.naziv
 from pozajmice_kg p
 join clanovi_kg cl
 on p.broj_clanske_karte=cl.broj_clanske_karte
@@ -80,7 +79,7 @@ on po.inventarski_broj = p.inventarski_broj
 where po.broj_clanske_karte = 22
 group by k.naziv;
 
-//19- NEURADJEN
+//19- izbaciti duplikate
 select cl.ime as ime_clana,  aut.ime as ime_autora
 from clanovi_kg cl 
 join pozajmice_kg po
@@ -93,5 +92,12 @@ join autori_kg aut
 on aut.id_autora = ak.id_autora
 group by id_knjige;
 
-//20 - NEURADJEN
-
+//20- nije sig
+select i.naziv as naziv_izadavaca, k.naziv as naziv_knjige
+from izdavaci_kg i
+join knjige_kg k
+on k.id_izdavaca = i.id
+join primerci_kg pr
+on pr.id_knjige = k.id_knjige
+order by i.naziv;
+ 
