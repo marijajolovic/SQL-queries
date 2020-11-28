@@ -14,3 +14,84 @@ select ime, prezime from zaposleni_kg where id_menadzera in (1,2,3);
 
 select ime, prezime, mejl from zaposleni_kg where id_menadzera is null;
 
+select prezime, iznos, god 
+from clanovi_kg 
+join clanarine_kg
+on clanovi_kg.broj_clanske_karte = clanarine_kg.broj_clanske_karte;
+
+select prezime, mejl_adresa, iznos, god
+from clanovi_kg
+join clanarine_kg
+on clanovi_kg.broj_clanske_karte = clanarine_kg.broj_clanske_karte
+where mejl_adresa is not null;
+
+select k.naziv as naziv_knjige, i.naziv as naziv_izdavaca
+from knjige_kg k
+join izdavaci_kg i
+on k.id_izdavaca = i.id;
+
+select z.prezime, m.prezime
+from zaposleni_kg z
+join zaposleni_kg m
+on z.id_menadzera=m.id;
+
+select ime, prezime, datum_uzimanja, inventarski_broj
+from pozajmice_kg p
+join clanovi_kg cl
+on p.broj_clanske_karte=cl.broj_clanske_karte;
+
+select ime, prezime, datum_uzimanja, inventarski_broj
+from pozajmice_kg p
+join clanovi_kg cl
+on p.broj_clanske_karte=cl.broj_clanske_karte
+where datum_vracanja is null;
+
+//15- NEURADJEN
+select ime, prezime, datum_uzimanja, inventarski_broj, k.naziv
+from pozajmice_kg p
+join clanovi_kg cl
+on p.broj_clanske_karte=cl.broj_clanske_karte
+join primerci_kg pr
+on pr.inventarski_broj = p.inventarski_broj
+join knjige_kg k
+on k.id_knjige = pr.id_knjige;
+
+select k.naziv, aut.ime
+from knjige_kg k
+join autori_knjige_kg ak 
+on ak.id_knjige = k.id_knjige
+join autori_kg aut 
+on aut.id_autora = ak.id_autora;
+
+select k.naziv
+from knjige_kg k
+join autori_knjige_kg ak 
+on ak.id_knjige = k.id_knjige
+join autori_kg aut 
+on aut.id_autora = ak.id_autora
+where aut.ime like '%Mijodrag%';
+
+select k.naziv
+from knjige_kg k
+join primerci_kg p
+on k.id_knjige = p.id_knjige
+join pozajmice_kg po
+on po.inventarski_broj = p.inventarski_broj
+where po.broj_clanske_karte = 22
+group by k.naziv;
+
+//19- NEURADJEN
+select cl.ime as ime_clana,  aut.ime as ime_autora
+from clanovi_kg cl 
+join pozajmice_kg po
+on po.broj_clanske_karte = cl.broj_clanske_karte
+join primerci_kg pr 
+on pr.inventarski_broj = po.inventarski_broj
+join autori_knjige_kg ak
+on ak.id_knjige = pr.id_knjige
+join autori_kg aut
+on aut.id_autora = ak.id_autora
+group by id_knjige;
+
+//20 - NEURADJEN
+
