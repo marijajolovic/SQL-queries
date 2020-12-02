@@ -79,8 +79,7 @@ on po.inventarski_broj = p.inventarski_broj
 where po.broj_clanske_karte = 22
 group by k.naziv;
 
-//19- izbaciti duplikate
-select cl.ime as ime_clana,  aut.ime as ime_autora
+select distinct cl.ime as ime_clana,  aut.ime as ime_autora
 from clanovi_kg cl 
 join pozajmice_kg po
 on po.broj_clanske_karte = cl.broj_clanske_karte
@@ -90,14 +89,10 @@ join autori_knjige_kg ak
 on ak.id_knjige = pr.id_knjige
 join autori_kg aut
 on aut.id_autora = ak.id_autora
-group by id_knjige;
+order by cl.ime;
 
-//20- nije sig
-select i.naziv as naziv_izadavaca, k.naziv as naziv_knjige
+select i.naziv as naziv_izdavaca, k.naziv as naziv_knjige
 from izdavaci_kg i
-join knjige_kg k
-on k.id_izdavaca = i.id
-join primerci_kg pr
-on pr.id_knjige = k.id_knjige
-order by i.naziv;
+full outer join knjige_kg k
+on (i.id=k.id_izdavaca);
  
