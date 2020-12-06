@@ -26,3 +26,25 @@ select department_id, max(salary)
 from employees
 group by department_id
 having max(salary)<(select max(salary) from employees where department_id != 130);
+
+
+//////////////////////         2             //////////////////////////////
+select *
+from employees
+where last_name like 'H%' and length(last_name)=6;
+
+select last_name, salary
+from employees
+order by salary desc;
+
+select phone_number, email
+from employees
+where phone_number is not null and department_id between 60 and 110;
+
+select last_name
+from employees
+where department_id is not null;
+
+select *
+from employees
+where (last_name like 'D%') and (employee_id between 100 and 200) and department_id in (10,20,60,65,75,110);
