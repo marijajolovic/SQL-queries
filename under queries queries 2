@@ -1,1 +1,81 @@
-hm
+create table knjiga_mj
+(
+    id_knjige VARCHAR2(15) CONSTRAINT knjiga_mj_id_knjige_pk PRIMARY KEY,
+    naziv VARCHAR2(30) NOT NULL,
+    id_izdavaca VARCHAR2(15) NOT NULL,
+    CONSTRAINT knjiga_mj_id_izdavaca_fk FOREIGN KEY(id_izdavaca) REFERENCES izdavac_mj(id)
+)
+create table izdavac_mj
+(
+    id VARCHAR2(15) CONSTRAINT izdavac_mj_id_pk PRIMARY KEY,
+    naziv VARCHAR2(30) NOT NULL,
+    adresa VARCHAR2(30),
+    veb_sajt VARCHAR2(30)
+)
+
+update zaposleni_kg
+set plata=110/100*plata
+where id_menadzera=3;
+
+update clanovi_kg
+set adresa='Страхињића Бана 2'
+where broj_clanske_karte=33;
+
+insert all
+    into zaposleni_kg (id, ime, prezime, mejl, datum_zaposlenja, plata, id_menadzera) values ('262', 'Marija', 'Jolovic','marija.jolovic.kg@gmail.com', TO_DATE('2018-2-26','YYYY-MM-DD'),'30000','2')
+    into zaposleni_kg (id, ime, prezime, mejl, datum_zaposlenja, plata, id_menadzera) values ('107', 'Jelena', 'Jolovic','jelena.jolovic.kg@gmail.com', TO_DATE('2016-3-18','YYYY-MM-DD'),'45000','2')
+    into zaposleni_kg (id, ime, prezime, mejl, datum_zaposlenja, plata, id_menadzera) values ('352', 'Ivan', 'Jolovic','ivan.jolovic.kg@gmail.com', TO_DATE('2014-11-11','YYYY-MM-DD'),'60000','1')
+select* from dual;
+
+insert all 
+    into knjige_kg (id_knjige, naziv, id_izdavaca) values ('262','Devojka i noc','4')
+    into knjige_kg (id_knjige, naziv, id_izdavaca) values ('107','Macka medju golubovima','2')
+select* from dual;
+
+select*
+from employees
+order by employee_id;
+
+select e.manager_id, e.department_id, d.department_name, e.first_name, e.last_name
+from employees e
+join departments d
+on e.department_id=d.department_id
+where e.department_id in (80,90,110,190);
+
+select e.employee_id, d.department_name
+from employees e
+full outer join departments d
+on e.department_id=d.department_id;
+
+select e.first_name, j.job_title, d.department_id, d.department_name, d.location_id
+from employees e
+join jobs j
+on e.job_id=j.job_id
+join departments d
+on e.department_id=d.department_id;
+
+select employee_id
+from employees e
+join departments d
+on d.department_id=e.department_id
+join locations l
+on l.location_id=d.location_id
+where city='Oxford';
+
+select *
+from zaposleni_kg
+where plata=(select plata from zaposleni_kg where prezime = 'Lazovic');
+
+select *
+from clanovi_kg cl
+join clanarine_kg cr
+on cl.broj_clanske_karte=cr.broj_clanske_karte
+where cr.god='2019' and cr.iznos=(select iznos from clanarine_kg where broj_clanske_karte=33 and god='2019');
+
+select knj.naziv
+from knjige_kg knj
+join primerci_kg pr
+on knj.id_knjige=pr.id_knjige
+join pozajmice_kg po
+on po.inventarski_broj=pr.inventarski_broj
+where po.datum_uzimanja=(select min(datum_uzimanja) from pozajmice_kg)
